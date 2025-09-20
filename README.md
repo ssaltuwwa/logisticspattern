@@ -41,7 +41,129 @@ Factory Method defines an interface for creating objects in a superclass and let
 
 ---
 
-## 5️⃣ UML (Mermaid)
+## 5️⃣ How to Build & Run
+
+### 📌 Files (no packages)
+- `Transport.java`  
+- `Truck.java`  
+- `Ship.java`  
+- `Airplane.java`  
+- `TransportMode.java`  
+- `Logistics.java`  
+- `SimpleLogistics.java`  
+- `Main.java`  
+
+### 🖥 IntelliJ IDEA
+1. **Create a plain Java project** and put all `.java` files into `src/`.
+2. Open **Run Configurations**:
+   - **Main class:** `Main`
+   - **Program arguments:** `road` / `sea` / `air`  
+     *(no arguments → runs all three modes)*
+
+### 🖥 CLI
+```bash
+javac *.java
+java Main road     # try: sea, air
+
+## ✅ Expected Output
+
+[SimpleLogistics(ROAD)] Planning delivery...
+Delivering goods by road using a Truck.
+[SimpleLogistics(SEA)] Planning delivery...
+Delivering goods by sea using a Ship.
+[SimpleLogistics(AIR)] Planning delivery...
+Delivering goods by air using an Airplane.
+
+---
+
+## 6️⃣ Extensibility
+
+You **don’t need to add new transport types** to meet the Factory Method pattern requirement,  
+but the design makes it easy if you ever want to:
+
+1. **Create a new product class**  
+   Example:  
+   ```java
+   public class Drone implements Transport {
+       @Override
+       public void deliver() {
+           System.out.println("Delivering goods by drone through the air.");
+       }
+   }
+
+2. **Add the new enum value**
+    public enum TransportMode {
+        ROAD, SEA, AIR, DRONE
+    }
+
+3. **Extend createTransport() in SimpleLogistics**
+    @Override
+    protected Transport createTransport() {
+        switch (mode) {
+            case ROAD: return new Truck();
+            case SEA: return new Ship();
+            case AIR: return new Airplane();
+            case DRONE: return new Drone();
+            default: throw new IllegalArgumentException("Unknown transport mode: " + mode);
+        }
+    }
+
+✅ No changes required to Main or any other client code — **Open/Closed Principle respected.**
+
+---
+
+## 7️⃣ Clean Code Notes
+
+- **Meaningful Names:**  
+  Classes and methods are named after their intent: `Transport`, `Logistics`, `createTransport`, `planDelivery`.
+
+- **Single Responsibility Principle:**  
+  Each class has exactly one job:
+  - `Transport` = interface for delivery behavior  
+  - `Truck`, `Ship`, `Airplane` = concrete products  
+  - `Logistics` = planning template with factory method  
+  - `SimpleLogistics` = chooses which product to create  
+
+- **Open/Closed Principle:**  
+  The system is **open for extension** (add new products like `Drone`) but **closed for modification** (no changes to client code).
+
+- **Program to Interfaces:**  
+  `Main` only uses the `Transport` interface and never touches concrete classes.
+
+- **Readable Methods:**  
+  Small, clear, and easy to follow — `planDelivery()` and `createTransport()` are both short and focused.
+
+---
+
+## 8️⃣ Pros & Cons of the Compact Variant
+
+| ✅ **Pros** | ⚠️ **Cons** |
+|------------|-------------|
+| Fewer classes → very easy to read | Single `switch`/`if` block may grow large as product count grows |
+| Still 100% valid Factory Method | For very large systems, consider multiple creators (e.g. `RoadLogistics`, `SeaLogistics`) |
+| Perfect for assignments, interviews, small projects | — |
+
+> 💡 **Takeaway:**  
+> This variant trades a small `switch` for minimal class count, making it ideal for learning or small projects.  
+> For large enterprise codebases, multiple concrete creators might scale better.
+
+---
+
+## 9️⃣ Testing Ideas
+
+- **Mode Tests:**  
+  Verify that `TransportMode.ROAD` returns `Truck`, `SEA` returns `Ship`, and `AIR` returns `Airplane`.
+
+- **Behavior Tests:**  
+  Mock or spy a `Transport` object to ensure `planDelivery()` calls `deliver()` exactly once.
+
+- **Extensibility Test:**  
+  Add a new product (`Drone`), run without modifying `Main`, confirm it works.  
+  ✅ Demonstrates **open/closed principle** in action.
+
+---
+
+## 🔟 UML (Mermaid)
 
 ```mermaid
 classDiagram
@@ -85,127 +207,5 @@ classDiagram
     Logistics <|-- SimpleLogistics
     SimpleLogistics --> TransportMode
     Logistics --> Transport : uses
-
----
-
-## 6️⃣ How to Build & Run
-
-### 📌 Files (no packages)
-- `Transport.java`  
-- `Truck.java`  
-- `Ship.java`  
-- `Airplane.java`  
-- `TransportMode.java`  
-- `Logistics.java`  
-- `SimpleLogistics.java`  
-- `Main.java`  
-
-### 🖥 IntelliJ IDEA
-1. **Create a plain Java project** and put all `.java` files into `src/`.
-2. Open **Run Configurations**:
-   - **Main class:** `Main`
-   - **Program arguments:** `road` / `sea` / `air`  
-     *(no arguments → runs all three modes)*
-
-### 🖥 CLI
-```bash
-javac *.java
-java Main road     # try: sea, air
-
-## ✅ Expected Output
-
-[SimpleLogistics(ROAD)] Planning delivery...
-Delivering goods by road using a Truck.
-[SimpleLogistics(SEA)] Planning delivery...
-Delivering goods by sea using a Ship.
-[SimpleLogistics(AIR)] Planning delivery...
-Delivering goods by air using an Airplane.
-
----
-
-## 7️⃣ Extensibility
-
-You **don’t need to add new transport types** to meet the Factory Method pattern requirement,  
-but the design makes it easy if you ever want to:
-
-1. **Create a new product class**  
-   Example:  
-   ```java
-   public class Drone implements Transport {
-       @Override
-       public void deliver() {
-           System.out.println("Delivering goods by drone through the air.");
-       }
-   }
-
-2. **Add the new enum value**
-    public enum TransportMode {
-        ROAD, SEA, AIR, DRONE
-    }
-
-3. **Extend createTransport() in SimpleLogistics**
-    @Override
-    protected Transport createTransport() {
-        switch (mode) {
-            case ROAD: return new Truck();
-            case SEA: return new Ship();
-            case AIR: return new Airplane();
-            case DRONE: return new Drone();
-            default: throw new IllegalArgumentException("Unknown transport mode: " + mode);
-        }
-    }
-
-✅ No changes required to Main or any other client code — **Open/Closed Principle respected.**
-
----
-
-## 8️⃣ Clean Code Notes
-
-- **Meaningful Names:**  
-  Classes and methods are named after their intent: `Transport`, `Logistics`, `createTransport`, `planDelivery`.
-
-- **Single Responsibility Principle:**  
-  Each class has exactly one job:
-  - `Transport` = interface for delivery behavior  
-  - `Truck`, `Ship`, `Airplane` = concrete products  
-  - `Logistics` = planning template with factory method  
-  - `SimpleLogistics` = chooses which product to create  
-
-- **Open/Closed Principle:**  
-  The system is **open for extension** (add new products like `Drone`) but **closed for modification** (no changes to client code).
-
-- **Program to Interfaces:**  
-  `Main` only uses the `Transport` interface and never touches concrete classes.
-
-- **Readable Methods:**  
-  Small, clear, and easy to follow — `planDelivery()` and `createTransport()` are both short and focused.
-
----
-
-## 9️⃣ Pros & Cons of the Compact Variant
-
-| ✅ **Pros** | ⚠️ **Cons** |
-|------------|-------------|
-| Fewer classes → very easy to read | Single `switch`/`if` block may grow large as product count grows |
-| Still 100% valid Factory Method | For very large systems, consider multiple creators (e.g. `RoadLogistics`, `SeaLogistics`) |
-| Perfect for assignments, interviews, small projects | — |
-
-> 💡 **Takeaway:**  
-> This variant trades a small `switch` for minimal class count, making it ideal for learning or small projects.  
-> For large enterprise codebases, multiple concrete creators might scale better.
-
----
-
-## 🔟 Testing Ideas
-
-- **Mode Tests:**  
-  Verify that `TransportMode.ROAD` returns `Truck`, `SEA` returns `Ship`, and `AIR` returns `Airplane`.
-
-- **Behavior Tests:**  
-  Mock or spy a `Transport` object to ensure `planDelivery()` calls `deliver()` exactly once.
-
-- **Extensibility Test:**  
-  Add a new product (`Drone`), run without modifying `Main`, confirm it works.  
-  ✅ Demonstrates **open/closed principle** in action.
 
 ---
