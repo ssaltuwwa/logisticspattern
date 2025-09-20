@@ -1,6 +1,6 @@
 # 🚚 Factory Method — Logistics 
-## Course: Software Design Patterns
-## Name/Group: Sergeyeva Saltanat SE-2403
+**Course: Software Design Patterns
+Name/Group: Sergeyeva Saltanat SE-2403**
 
 ---
 
