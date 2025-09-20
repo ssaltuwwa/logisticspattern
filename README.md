@@ -64,6 +64,7 @@ Factory Method defines an interface for creating objects in a superclass and let
 ```bash
 javac *.java
 java Main road     # try: sea, air
+exit
 
 ## ✅ Expected Output
 
