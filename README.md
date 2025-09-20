@@ -174,5 +174,3 @@ classDiagram
     Logistics <|-- SimpleLogistics
     SimpleLogistics --> TransportMode
     Logistics --> Transport : uses
-
----
