@@ -57,11 +57,13 @@ but the design makes it easy if you ever want to:
    }
 
 2. **Add the new enum value**
+   ```java
     public enum TransportMode {
         ROAD, SEA, AIR, DRONE
     }
 
 3. **Extend createTransport() in SimpleLogistics**
+   ```java
     @Override
     protected Transport createTransport() {
         switch (mode) {
