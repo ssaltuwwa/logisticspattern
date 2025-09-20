@@ -1,8 +1,6 @@
-# 🚚 Factory Method — Logistics (Compact, No Packages)
-
-A clear, **human-readable Factory Method implementation** for a logistics scenario.  
-This compact variant uses **one concrete creator (`SimpleLogistics`)** that chooses which product (`Transport`) to instantiate based on a small enum (`TransportMode`).  
-It keeps class count low while staying 100% correct for Factory Method.
+# 🚚 Factory Method — Logistics 
+## Course: Software Design Patterns
+## Name/Group: Sergeyeva Saltanat SE-2403
 
 ---
 
