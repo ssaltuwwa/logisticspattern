@@ -41,43 +41,7 @@ Factory Method defines an interface for creating objects in a superclass and let
 
 ---
 
-## 5️⃣ How to Build & Run
-
-### 📌 Files (no packages)
-- `Transport.java`  
-- `Truck.java`  
-- `Ship.java`  
-- `Airplane.java`  
-- `TransportMode.java`  
-- `Logistics.java`  
-- `SimpleLogistics.java`  
-- `Main.java`  
-
-### 🖥 IntelliJ IDEA
-1. **Create a plain Java project** and put all `.java` files into `src/`.
-2. Open **Run Configurations**:
-   - **Main class:** `Main`
-   - **Program arguments:** `road` / `sea` / `air`  
-     *(no arguments → runs all three modes)*
-
-### 🖥 CLI
-```bash
-javac *.java
-java Main road     # try: sea, air
-exit
-
-## ✅ Expected Output
-
-[SimpleLogistics(ROAD)] Planning delivery...
-Delivering goods by road using a Truck.
-[SimpleLogistics(SEA)] Planning delivery...
-Delivering goods by sea using a Ship.
-[SimpleLogistics(AIR)] Planning delivery...
-Delivering goods by air using an Airplane.
-
----
-
-## 6️⃣ Extensibility
+## 5️⃣ Extensibility
 
 You **don’t need to add new transport types** to meet the Factory Method pattern requirement,  
 but the design makes it easy if you ever want to:
@@ -113,7 +77,7 @@ but the design makes it easy if you ever want to:
 
 ---
 
-## 7️⃣ Clean Code Notes
+## 6️⃣ Clean Code Notes
 
 - **Meaningful Names:**  
   Classes and methods are named after their intent: `Transport`, `Logistics`, `createTransport`, `planDelivery`.
@@ -136,7 +100,7 @@ but the design makes it easy if you ever want to:
 
 ---
 
-## 8️⃣ Pros & Cons of the Compact Variant
+## 7️⃣ Pros & Cons of the Compact Variant
 
 | ✅ **Pros** | ⚠️ **Cons** |
 |------------|-------------|
@@ -150,7 +114,7 @@ but the design makes it easy if you ever want to:
 
 ---
 
-## 9️⃣ Testing Ideas
+## 8️⃣ Testing Ideas
 
 - **Mode Tests:**  
   Verify that `TransportMode.ROAD` returns `Truck`, `SEA` returns `Ship`, and `AIR` returns `Airplane`.
@@ -164,7 +128,7 @@ but the design makes it easy if you ever want to:
 
 ---
 
-## 🔟 UML (Mermaid)
+## 9️⃣ UML (Mermaid)
 
 ```mermaid
 classDiagram
